@@ -5,7 +5,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule } from '@nestjs/config';
-import configuration from 'config/configuration';
+import configuration from './config/configuration';
 
 @Module({
   imports: [

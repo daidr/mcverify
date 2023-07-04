@@ -10,7 +10,7 @@ import {
 import { AppService } from './app.service';
 import * as secureSession from '@fastify/secure-session';
 import { ConfigService } from '@nestjs/config';
-import { randomString } from 'utils/string';
+import { randomString } from './utils/string';
 
 @Controller()
 export class AppController {
