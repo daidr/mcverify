@@ -17,7 +17,7 @@
   "dependencies": {
     "@fastify/secure-session": "^6.1.0",
     "@fastify/static": "^6.10.2",
-    "@fastify/view": "^7.0.0",
+    "@fastify/view": "^8.0.0",
     "@nestjs/cache-manager": "^2.0.1",
     "@nestjs/common": "^10.0.5",
     "@nestjs/config": "^3.0.0",
