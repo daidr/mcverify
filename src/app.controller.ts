@@ -7,28 +7,44 @@ import {
   Res,
   Session,
 } from '@nestjs/common';
-import { AppService } from './app.service';
+import { AppService, HduhelpUserInfo } from './app.service';
 import * as secureSession from '@fastify/secure-session';
 import { ConfigService } from '@nestjs/config';
-import { randomString } from './utils/string';
+import { ellipsisUuid, getUrl, randomString } from './utils/string';
+import { UsersService } from './users/users.service';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
     private configService: ConfigService,
+    private usersService: UsersService,
   ) {}
 
   @Get()
   @Render('index')
-  index(@Session() session: secureSession.Session) {
-    const isLoggedIn = session.get('isLogged');
+  async index(@Session() session: secureSession.Session) {
     const hduhelpId = session.get('hduhelpId');
-    return {
-      isLoggedIn,
-      hduhelpId,
-      CURRENT_YEAR: new Date().getFullYear(),
-    };
+    const isLoggedIn = !!hduhelpId;
+    if (!isLoggedIn) {
+      return {
+        isLoggedIn,
+      };
+    } else {
+      const userData = await this.usersService.findOneByHduhelpId(hduhelpId);
+      return {
+        isLoggedIn,
+        hduhelpId: ellipsisUuid(hduhelpId),
+        mojangUuid: userData && userData.uuid_mojang,
+        CURRENT_YEAR: new Date().getFullYear(),
+      };
+    }
+  }
+
+  @Get('logout')
+  logout(@Session() session: secureSession.Session, @Res() res: any) {
+    session.delete();
+    res.status(302).redirect('/');
   }
 
   @Get('jump')
@@ -38,11 +54,14 @@ export class AppController {
     const hduhelpRedirectUri = this.configService.get('hduhelp.redirect_uri');
     const tempState = randomString(32);
     session.set('hduhelp.state', tempState);
+
     // 生成 oauth 跳转链接
-    const oauthUrl = new URL(
-      hduhelpEntry,
-      `/oauth/authorize?response_type=code&client_id=${hduhelpClientId}&redirect_uri=${hduhelpRedirectUri}&state=${tempState}`,
-    );
+    const oauthUrl = getUrl(hduhelpEntry, '/oauth/authorize', {
+      response_type: 'code',
+      client_id: hduhelpClientId,
+      redirect_uri: hduhelpRedirectUri,
+      state: tempState,
+    });
 
     // 重定向
     res.status(302).redirect(oauthUrl.toString());
@@ -55,15 +74,6 @@ export class AppController {
     @Query('code') code: string,
     @Query('state') state: string,
   ) {
-    // referer 不是 hduhelpEntry，403
-    const hduhelpEntry = this.configService.get('hduhelp.entry');
-    if (
-      new URL(res.req.headers.referer).origin !== new URL(hduhelpEntry).origin
-    ) {
-      res.status(403).send('403 Forbidden');
-      return;
-    }
-
     // state 不一致，403
     if (
       state &&
@@ -81,7 +91,6 @@ export class AppController {
     try {
       const userInfo = await this.appService.getHduhelpUserByCode(code, state);
       // 保存 session
-      session.set('isLogged', true);
       session.set('hduhelpId', userInfo.user_id);
       // 获取重定向目标
       const redirectUrl = session.get('redirectUrl');

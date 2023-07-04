@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { getUrl } from './utils/string';
 
-interface UserInfo {
+export interface HduhelpUserInfo {
   staff_id: string;
   staff_name: string;
   staff_type: '0' | '1' | '2';
@@ -16,15 +17,22 @@ export class AppService {
     return 'Hello World!';
   }
 
-  async getHduhelpUserByCode(code: string, state: string): Promise<UserInfo> {
+  async getHduhelpUserByCode(
+    code: string,
+    state: string,
+  ): Promise<HduhelpUserInfo> {
     const hduhelpEntry = this.configService.get('hduhelp.entry');
     const hduhelpClientId = this.configService.get('hduhelp.client_id');
     const hduhelpClientSecret = this.configService.get('hduhelp.client_secret');
 
-    const authUrl = new URL(
-      hduhelpEntry,
-      `/oauth/token?client_id=${hduhelpClientId}&client_secret=${hduhelpClientSecret}&grant_type=authorization_code&code=${code}&state=${state}`,
-    );
+    const authUrl = getUrl(hduhelpEntry, '/oauth/token', {
+      response_type: 'code',
+      client_id: hduhelpClientId,
+      client_secret: hduhelpClientSecret,
+      grant_type: 'authorization_code',
+      code,
+      state,
+    });
 
     return await fetch(authUrl.toString())
       .then((res) => res.json())
@@ -38,7 +46,7 @@ export class AppService {
           staff_name: json.data.staff_name,
           staff_type: json.data.staff_type,
           user_id: json.data.user_id,
-        } as UserInfo;
+        } as HduhelpUserInfo;
       });
   }
 }

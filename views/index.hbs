@@ -5,6 +5,8 @@
     <title>MC Verify | 戴兜的小屋</title>
     <link rel='stylesheet' href='/public/style/global.css' />
     <link rel='stylesheet' href='/public/style/index.css' />
+    <link rel='stylesheet' href='/public/fonts/londrinasolid/font.css' />
+    <link rel='stylesheet' href='/public/fonts/concertone/font.css' />
     <link
       rel='icon'
       href='/public/images/icon256.png'
@@ -14,16 +16,43 @@
     <link rel='shortcut icon' href='/public/favicon.ico' type='image/x-icon' />
   </head>
   <body>
-
-    {{! Main Area }}
     {{#if isLoggedIn}}
-      <div>登录态</div>
-    {{else}}
-      <div class='banner'>
-        <img src='/public/images/icon256.png' alt='verify-logo' class='logo' />
-        <p class='title'>MC Verify</p>
-        <br />
-        <button class='login-btn'>
+      <a href='/logout' class='animate-link logout-btn'>登出</a>
+    {{/if}}
+    <div class='banner'>
+      <img src='/public/images/icon256.png' alt='verify-logo' class='logo' />
+      <p class='title'>MC Verify</p>
+      <br />
+      {{#if isLoggedIn}}
+        <div class='user-card'>你好，<span
+            class='hduhelp-id prompt-text'
+            data-prompt='这是与您杭电身份相关的唯一ID'
+          >{{hduhelpId}}</span></div>
+        {{#if mojangUuid}}
+          {{!-- {{#if mojangUuid}} --}}
+          <div class='mc-card'>
+            <div
+              class='avatar'
+              style='background-image:url(/public/images/face.png)'
+            >
+            </div>
+            <div class='right'>
+              <div class='nickname'>daidr</div>
+              <div class='uuid'>f1fd12b1-c0d8-4286-b080-910484b7f9f6</div>
+            </div>
+          </div>
+        {{else}}
+          <div class='prompt'>
+            <div class='server'>
+              placeholder.example.com
+            </div>
+            <div class='text'>请进入验证服务器 根据指引完成绑定</div>
+            <small>1.7.10-1.20.1 (包含快照)</small>
+          </div>
+        {{/if}}
+      {{else}}
+
+        <a class='login-btn' href='/jump'>
           <svg
             viewBox='0 0 17 24'
             version='1.1'
@@ -38,18 +67,9 @@
             </g>
           </svg>
           杭电助手登录
-        </button>
-        {{! <div class='prompt'>
-          请进入验证服务器
-          <br />
-          根据指引完成绑定
-          <div class='server'>
-            placeholder.example.com
-          </div>
-          <small>1.7.10-1.20.1 (包含快照)</small>
-        </div> }}
-      </div>
-    {{/if}}
+        </a>
+      {{/if}}
+    </div>
 
     {{! Footer }}
     <footer>

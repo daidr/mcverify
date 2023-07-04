@@ -14,6 +14,11 @@
     --primary-light: #a6dad5;
     --primary-dark: #00766c;
     --hduhelp-primary: #4399e1;
+
+    --primary-rgb: 77, 182, 172;
+    --primary-light-rgb: 166, 218, 213;
+    --primary-dark-rgb: 0, 118, 108;
+    --hduhelp-primary-rgb: 67, 153, 225;
 }
 
 body {
@@ -83,4 +88,50 @@ a {
 ::selection {
     background-color: var(--primary);
     color: white;
+}
+
+.prompt-text {
+    cursor: help;
+    position: relative;
+}
+
+.prompt-text::before {
+    position: absolute;
+    content: attr(data-prompt);
+    z-index: 0;
+    width: 100%;
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    background-color: var(--primary-light);
+    opacity: 0.5;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    text-align: center;
+    --color-transition: color 0s;
+    transition: background-color 0.2s, padding 0.2s, opacity 0.2s, color 0.2s,
+        height 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28), transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28),
+        width 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28), var(--color-transition);
+    --text-opacity: 0;
+    color: rgba(77, 182, 172, var(--text-opacity));
+}
+
+.prompt-text:hover::before {
+    transform: translateY(-1.7rem) translateX(-1rem);
+    height: calc(2em + 0.8rem);
+    width: calc(100% + 2rem);
+    opacity: 1;
+    padding: 0.2rem;
+    background-color: white;
+    --text-opacity: 1;
+    --color-transition: color 0.2s 0.1s;
+    border: var(--primary) solid 1px;
+}
+
+.logout-btn {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
 }

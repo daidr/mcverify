@@ -14,6 +14,7 @@ import configuration from './config/configuration';
       type: 'better-sqlite3',
       database: 'database.sqlite',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: true,
     }),
     CacheModule.register({ isGlobal: true }),
     ConfigModule.forRoot({

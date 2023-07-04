@@ -16,12 +16,15 @@
 .title {
     user-select: none;
     margin: 1rem 0;
-    font-size: 2.75rem;
+    font-size: 3rem;
     font-weight: bolder;
     text-align: center;
-    font-family: "Arial Black", sans-serif;
-    color: var(--primary-dark);
+    font-family: "LondrinaSolid", "Arial Black", sans-serif;
+    color: transparent;
     position: relative;
+    background: linear-gradient(120deg, var(--primary-dark), var(--primary));
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 
 .title::before {
@@ -29,11 +32,14 @@
     position: absolute;
     bottom: -0.2rem;
     left: 0.1rem;
-    letter-spacing: 0.2em;
-    color: var(--primary-dark);
+    letter-spacing: 0.1em;
+    color: transparent;
     font-size: 1rem;
     font-weight: normal;
     opacity: 0.7;
+    background: linear-gradient(90deg, #451a0a, #9f7e72);
+    -webkit-background-clip: text;
+    background-clip: text;
 }
 
 .login-btn {
@@ -60,7 +66,7 @@
     border-radius: 1.4rem;
     pointer-events: none;
     content: "";
-    border: rgba(67, 153, 225, 0.2) 4px solid;
+    border: rgba(var(--hduhelp-primary-rgb), 0.3) 4px solid;
     position: absolute;
     top: 0;
     left: 0;
@@ -93,12 +99,15 @@
     align-items: center;
     justify-content: center;
     color: var(--primary);
-    font-size: 1.4rem;
+}
+
+.prompt .text {
+    font-size: 1rem;
 }
 
 .prompt .server {
     margin-top: 1rem;
-    border: rgba(77, 182, 172, 0.2) 4px solid;
+    border: rgba(var(--primary-rgb), 0.2) 4px solid;
     border-radius: 1.4rem;
     padding: 0.4rem 0.8rem;
     font-size: 1.5rem;
@@ -107,4 +116,72 @@
 
 .prompt small {
     font-size: 0.5rem;
+}
+
+.user-card {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: var(--primary);
+}
+
+.mc-card {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    color: var(--primary);
+    font-family: Roboto, system-ui, sans-serif;
+    background: white;
+    padding: 1rem;
+    border-radius: calc(1.5rem);
+    border: var(--primary-light) 1px solid;
+    --shadow-color: 69, 176, 166;
+    box-shadow: rgba(var(--shadow-color), 0.07) 0px 1px 2px, rgba(var(--shadow-color), 0.07) 0px 2px 4px,
+        rgba(var(--shadow-color), 0.07) 0px 4px 8px, rgba(var(--shadow-color), 0.07) 0px 8px 16px,
+        rgba(var(--shadow-color), 0.07) 0px 16px 32px, rgba(var(--shadow-color), 0.07) 0px 32px 64px;
+}
+
+.mc-card .avatar {
+    width: 4.5rem;
+    height: 4.5rem;
+    flex-shrink: 0;
+    background-size: cover;
+    border-radius: 0.8rem;
+    position: relative;
+}
+
+.mc-card .avatar::before {
+    position: absolute;
+    content: "";
+    --border-width: 4px;
+    --origin-boder-radius: 0.8rem;
+    top: calc(-1 * var(--border-width));
+    left: calc(-1 * var(--border-width));
+    right: calc(-1 * var(--border-width));
+    bottom: calc(-1 * var(--border-width));
+    border-radius: calc(var(--origin-boder-radius) + var(--border-width));
+    border: rgba(var(--primary-rgb), 0.2) var(--border-width) solid;
+}
+
+.mc-card .right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: bold;
+    padding: 0.2rem 1rem;
+    font-family: "Roboto Mono", "Courier New", Courier, monospace;
+}
+
+.mc-card .nickname {
+    font-size: 2.25rem;
+    line-height: 2rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.9;
+    font-family: "ConcertOne", "Concert One", cursive;
+}
+
+.mc-card .uuid {
+    font-size: 0.9rem;
+    color: var(--primary);
+    opacity: 0.8;
 }
