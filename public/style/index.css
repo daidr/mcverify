@@ -1,0 +1,110 @@
+.banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.logo {
+    width: 14rem;
+    height: 14rem;
+    pointer-events: none;
+    user-select: none;
+}
+
+.title {
+    user-select: none;
+    margin: 1rem 0;
+    font-size: 2.75rem;
+    font-weight: bolder;
+    text-align: center;
+    font-family: "Arial Black", sans-serif;
+    color: var(--primary-dark);
+    position: relative;
+}
+
+.title::before {
+    content: "HDUer";
+    position: absolute;
+    bottom: -0.2rem;
+    left: 0.1rem;
+    letter-spacing: 0.2em;
+    color: var(--primary-dark);
+    font-size: 1rem;
+    font-weight: normal;
+    opacity: 0.7;
+}
+
+.login-btn {
+    margin-top: -10rem;
+    transform: translateY(10rem);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(67, 153, 225, 0.8);
+    background-color: transparent;
+    font-size: 1.6rem;
+    font-weight: bold;
+    vertical-align: middle;
+    padding: 1rem 2rem;
+    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+    position: relative;
+    border: none;
+    border-radius: 1.4rem;
+}
+
+.login-btn::before {
+    border-radius: 1.4rem;
+    pointer-events: none;
+    content: "";
+    border: rgba(67, 153, 225, 0.2) 4px solid;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
+.login-btn:hover::before {
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 1.8rem;
+}
+
+.login-btn:hover {
+    background: var(--hduhelp-primary);
+    color: white;
+}
+
+.login-btn svg {
+    height: 1.2em;
+    margin-right: 0.5em;
+}
+
+.prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 1.4rem;
+}
+
+.prompt .server {
+    margin-top: 1rem;
+    border: rgba(77, 182, 172, 0.2) 4px solid;
+    border-radius: 1.4rem;
+    padding: 0.4rem 0.8rem;
+    font-size: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.prompt small {
+    font-size: 0.5rem;
+}
