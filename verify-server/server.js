@@ -13,7 +13,8 @@ function secondsToFriendlyString(seconds, units = ['分', '秒']) {
   }
 }
 
-const apiEndpoint = 'http://localhost:3000';
+const innerApiEndpoint = 'http://localhost:2343';
+const apiEndpoint = 'https://mcverify.daidr.me';
 
 const options = {
   motd: '§6§lMC §2§lVerify',
@@ -58,7 +59,7 @@ const server = createServer({
     // }
 
     response.description.text +=
-      '§e§l当前时间： §b' + new Date().toLocaleString();
+      '§e§l当前时间： §b' + new Date().toLocaleString('zh');
   },
 });
 
@@ -99,7 +100,9 @@ server.on('login', async function (client) {
   let createTime;
   let verifyCode;
   try {
-    let result = await fetch(`${apiEndpoint}/_users/mojang/${client.uuid}`);
+    let result = await fetch(
+      `${innerApiEndpoint}/_users/mojang/${client.uuid}`,
+    );
     let data = await result.json();
     if (data.code === -1) {
       client.write('kick_disconnect', {
@@ -237,12 +240,14 @@ server.on('login', async function (client) {
 
   const verifyInterval = setInterval(async () => {
     try {
-      let result = await fetch(`${apiEndpoint}/_users/mojang/${client.uuid}`);
+      let result = await fetch(
+        `${innerApiEndpoint}/_users/mojang/${client.uuid}`,
+      );
       let data = await result.json();
       if (data.code === -1) {
         client.write('kick_disconnect', {
           reason: JSON.stringify({
-            text: '§a§l绑定成功！\n你可以前往§6§lhttps://verify.daidr.me§r查看你的绑定信息。',
+            text: '§a§l绑定成功！\n你可以前往 §6§lhttps://mcverify.daidr.me §r查看你的绑定信息。',
           }),
         });
         client.end();
