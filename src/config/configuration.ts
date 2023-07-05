@@ -10,4 +10,8 @@ export default () => ({
     client_secret: process.env.HDUHELP_CLIENT_SECRET,
     redirect_uri: process.env.HDUHELP_REDIRECT_URI,
   },
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: parseInt(process.env.REDIS_PORT, 10) || 6379,
+  },
 });

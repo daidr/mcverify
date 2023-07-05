@@ -19,6 +19,9 @@
     --primary-light-rgb: 166, 218, 213;
     --primary-dark-rgb: 0, 118, 108;
     --hduhelp-primary-rgb: 67, 153, 225;
+
+    --red: #b12825;
+    --red-rgb: 177, 40, 37;
 }
 
 body {

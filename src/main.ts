@@ -17,6 +17,9 @@ async function bootstrap() {
   await app.register(secureSession, {
     secret: configService.get<string>('session.secret'),
     salt: configService.get<string>('session.salt'),
+    cookie: {
+      path: '/',
+    },
   });
   app.useStaticAssets({
     root: join(__dirname, '..', 'public'),
