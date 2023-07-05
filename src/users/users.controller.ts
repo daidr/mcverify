@@ -37,4 +37,24 @@ export class UsersController {
       };
     }
   }
+
+  @Get('/api/bind/mojang/:uuid')
+  async bindMojang(@Param('uuid') uuid: string) {
+    const user = await this.usersService.findOneByUuidMojang(uuid);
+    if (user) {
+      return {
+        code: 0,
+        data: {
+          binded: true,
+        },
+      };
+    } else {
+      return {
+        code: 0,
+        data: {
+          binded: false,
+        },
+      };
+    }
+  }
 }
