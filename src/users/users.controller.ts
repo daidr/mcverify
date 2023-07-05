@@ -53,7 +53,7 @@ export class UsersController {
         code: 0,
         msg: 'ok',
         data: {
-          binded: true,
+          bound: true,
         },
       };
     } else {
@@ -61,7 +61,7 @@ export class UsersController {
         code: 0,
         msg: 'ok',
         data: {
-          binded: false,
+          bound: false,
         },
       };
     }
