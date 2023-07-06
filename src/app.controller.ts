@@ -37,6 +37,22 @@ export class AppController {
     };
   }
 
+  @Get('unbind')
+  async unbind(@Session() session: secureSession.Session, @Res() res: any) {
+    const hduhelpId = session.get('hduhelpId');
+    const isLoggedIn = !!hduhelpId;
+    if (!isLoggedIn) {
+      res.status(302).redirect('/');
+      return;
+    } else {
+      const userData = await this.usersService.findOneByHduhelpId(hduhelpId);
+      if (userData && userData.uuid_mojang) {
+        await this.usersService.remove(userData.id);
+      }
+      res.status(302).redirect('/');
+    }
+  }
+
   @Get()
   @Render('index')
   async index(@Session() session: secureSession.Session) {

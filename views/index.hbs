@@ -17,7 +17,12 @@
   </head>
   <body>
     {{#if isLoggedIn}}
-      <a href='/logout' class='animate-link logout-btn'>登出</a>
+      <div class='extra-action'>
+        <a href='/logout' class='animate-link logout-btn'>登出</a>
+        {{#if mojangUuid}}
+          <a href='/unbind' class='animate-link unbind-btn'>解绑</a>
+        {{/if}}
+      </div>
     {{/if}}
     <div class='banner'>
       <img src='/public/images/icon256.png' alt='verify-logo' class='logo' />
@@ -29,16 +34,17 @@
             data-prompt='这是与您杭电身份相关的唯一ID'
           >{{hduhelpId}}</span></div>
         {{#if mojangUuid}}
-          {{!-- {{#if mojangUuid}} --}}
-          <div class='mc-card'>
-            <div
-              class='avatar'
-              style='background-image:url(https://crafatar.com/avatars/{{mojangUuid}}?overlay)'
-            >
-            </div>
-            <div class='right'>
-              <div class='nickname'>{{mojangName}}</div>
-              <div class='uuid'>{{mojangUuid}}</div>
+          <div class='mc-card-wrapper'>
+            <div class='mc-card'>
+              <div
+                class='avatar'
+                style='background-image:url(https://crafatar.com/avatars/{{mojangUuid}}?overlay)'
+              >
+              </div>
+              <div class='right'>
+                <div class='nickname'>{{mojangName}}</div>
+                <div class='uuid'>{{mojangUuid}}</div>
+              </div>
             </div>
           </div>
         {{else}}

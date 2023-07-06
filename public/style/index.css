@@ -126,7 +126,7 @@
 }
 
 .mc-card {
-    margin-top: 1rem;
+    position: relative;
     display: flex;
     align-items: center;
     color: var(--primary);
@@ -184,4 +184,25 @@
     font-size: 0.9rem;
     color: var(--primary);
     opacity: 0.8;
+}
+
+.mc-card-wrapper {
+    margin-top: 1rem;
+}
+
+.logout-btn,
+.unbind-btn {
+    font-size: 1.5rem;
+}
+.extra-action {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 0.5rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
 }
