@@ -28,7 +28,7 @@ export const sendLoginPacket = (client) => {
     dimensionCodec:
       Object.keys(extraCodec).indexOf(client.protocolVersion.toString()) !== -1
         ? extraCodec[client.protocolVersion.toString()]
-        : mcData.loginPacket.dimensionCodec,
+        : mcData.loginPacket && mcData.loginPacket.dimensionCodec,
   };
 
   client.write('login', loginPacket);
