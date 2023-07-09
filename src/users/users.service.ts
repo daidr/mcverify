@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class UsersService {
@@ -11,6 +12,7 @@ export class UsersService {
     @InjectRepository(User)
     private entityRepository: Repository<User>,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
+    private configService: ConfigService,
   ) {}
 
   async findOne(id: number): Promise<User> {
@@ -96,6 +98,28 @@ export class UsersService {
       );
 
       return data;
+    }
+
+    return result;
+  }
+
+  async getBase64AvatarByUuidMojang(uuid_mojang: string): Promise<string> {
+    const result = await this.cacheManager.get<string>(
+      `MCVERIFY:mojang_avatar:${uuid_mojang}`,
+    );
+
+    if (!result) {
+      const apiEntry = this.configService.get<string>('crafatar.entry');
+      const api = `/avatars/${uuid_mojang}?size=100&overlay`;
+      const result = await fetch(apiEntry + api);
+      const data = await result.arrayBuffer();
+      const base64 = Buffer.from(data).toString('base64');
+      const base64Avatar = `data:image/png;base64,${base64}`;
+      await this.cacheManager.set(
+        `MCVERIFY:mojang_avatar:${uuid_mojang}`,
+        base64Avatar,
+      );
+      return base64Avatar;
     }
 
     return result;

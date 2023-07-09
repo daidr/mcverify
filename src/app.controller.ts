@@ -64,9 +64,12 @@ export class AppController {
       };
     } else {
       const userData = await this.usersService.findOneByHduhelpId(hduhelpId);
-      let nickname;
+      let nickname, avatar;
       if (userData && userData.uuid_mojang) {
         nickname = await this.usersService.findNicknameByUuidMojang(
+          userData.uuid_mojang,
+        );
+        avatar = await this.usersService.getBase64AvatarByUuidMojang(
           userData.uuid_mojang,
         );
       }
@@ -75,6 +78,7 @@ export class AppController {
         hduhelpId: ellipsisUuid(hduhelpId),
         mojangUuid: userData && userData.uuid_mojang,
         mojangName: nickname,
+        mojangAvatar: avatar,
         CURRENT_YEAR: new Date().getFullYear(),
       };
     }
@@ -175,12 +179,14 @@ export class AppController {
       session.set('verify_code', code);
       session.set('verify_uuid', uuid);
       const nickname = await this.usersService.findNicknameByUuidMojang(uuid);
+      const avatar = await this.usersService.getBase64AvatarByUuidMojang(uuid);
       return {
         error: false,
         isLoggedIn,
         hduhelpId: ellipsisUuid(hduhelpId),
         mojangUuid: uuid,
         mojangName: nickname,
+        mojangAvatar: avatar,
         verifyCode: code,
         CURRENT_YEAR: new Date().getFullYear(),
       };
