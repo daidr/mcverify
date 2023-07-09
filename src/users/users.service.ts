@@ -78,16 +78,16 @@ export class UsersService {
 
     if (!result) {
       const result = await fetch(
-        `https://minecraft-api.com/api/pseudo/${uuid_mojang.replaceAll(
+        `https://sessionserver.mojang.com/session/minecraft/profile/${uuid_mojang.replaceAll(
           '-',
           '',
         )}`,
       );
-      const data = await result.text();
+      const data = await result.json();
 
       await this.cacheManager.set(
         `MCVERIFY:mojang_nickname:${uuid_mojang}`,
-        data,
+        data.name,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         {
