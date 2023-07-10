@@ -97,7 +97,7 @@ export class UsersService {
         },
       );
 
-      return data;
+      return data.name;
     }
 
     return result;
